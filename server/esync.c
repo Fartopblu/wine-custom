@@ -58,7 +58,7 @@ int do_esync(void)
 }
 
 static char shm_name[256];
-static int winlator_esync;
+static int termux_esync;
 static int shm_fd;
 static off_t shm_size;
 static void **shm_addrs;
@@ -68,7 +68,7 @@ static long pagesize;
 static void shm_cleanup(void)
 {
     close( shm_fd );
-    if ((winlator_esync && unlink( shm_name ) == -1) || (!winlator_esync && shm_unlink( shm_name ) == -1))
+    if ((termux_esync && unlink( shm_name ) == -1) || (!termux_esync && shm_unlink( shm_name ) == -1))
         perror( "shm_unlink" );
 }
 
@@ -79,14 +79,14 @@ void esync_init(void)
     if (fstat( config_dir_fd, &st ) == -1)
         fatal_error( "cannot stat config dir\n" );
 
-    winlator_esync = getenv("WINEESYNC_WINLATOR") && atoi(getenv("WINEESYNC_WINLATOR"));
+    termux_esync = getenv("WINEESYNC_TERMUX") && atoi(getenv("WINEESYNC_TERMUX"));
 
-    if (winlator_esync)
+    if (termux_esync)
     {
         if (st.st_ino != (unsigned long)st.st_ino)
-            sprintf( shm_name, "/data/data/com.winlator/files/imagefs/tmp/wine-%lx%08lx-esync", (unsigned long)((unsigned long long)st.st_ino >> 32), (unsigned long)st.st_ino );
+            sprintf( shm_name, "/data/data/com.termux/files/usr/tmp/wine-%lx%08lx-esync", (unsigned long)((unsigned long long)st.st_ino >> 32), (unsigned long)st.st_ino );
         else
-            sprintf( shm_name, "/data/data/com.winlator/files/imagefs/tmp/wine-%lx-esync", (unsigned long)st.st_ino );
+            sprintf( shm_name, "/data/data/com.termux/files/usr/tmp/wine-%lx-esync", (unsigned long)st.st_ino );
         unlink( shm_name );
         shm_fd = open( shm_name, O_RDWR | O_CREAT | O_EXCL, 0644 );
     }
