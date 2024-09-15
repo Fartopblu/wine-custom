@@ -1241,7 +1241,7 @@ static const char *init_server_dir( dev_t dev, ino_t ino )
 #ifdef __ANDROID__  /* there's no /tmp dir on Android */
     asprintf( &dir, "%s/.wineserver/server-%llx-%llx", config_dir, (unsigned long long)dev, (unsigned long long)ino );
 #else
-    asprintf( &dir, "/data/data/com.winlator/files/imagefs/tmp/.wine-%u/server-%llx-%llx", getuid(), (unsigned long long)dev, (unsigned long long)ino );
+    asprintf( &dir, "/data/data/com.termux/files/usr/tmp/.wine-%u/server-%llx-%llx", getuid(), (unsigned long long)dev, (unsigned long long)ino );
 #endif
     return dir;
 }
@@ -1284,7 +1284,7 @@ static int setup_config_dir(void)
     {
         mkdir( "drive_c", 0777 );
         symlink( "../drive_c", "dosdevices/c:" );
-        symlink( "/data/data/com.winlator/files/imagefs", "dosdevices/z:" );
+        symlink( "/data/data/com.termux/files/usr", "dosdevices/z:" );
     }
     else if (errno != EEXIST) fatal_perror( "cannot create %s/dosdevices", config_dir );
 
