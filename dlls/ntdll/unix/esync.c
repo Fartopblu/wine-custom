@@ -1309,9 +1309,9 @@ void esync_init(void)
     if (termux_esync)
     {
         if (st.st_ino != (unsigned long)st.st_ino)
-            sprintf( shm_name, "/data/data/com.termux/files/imagefs/tmp/wine-%lx%08lx-esync", (unsigned long)((unsigned long long)st.st_ino >> 32), (unsigned long)st.st_ino );
+            sprintf( shm_name, "/data/data/com.termux/files/usr/tmp/wine-%lx%08lx-esync", (unsigned long)((unsigned long long)st.st_ino >> 32), (unsigned long)st.st_ino );
         else
-            sprintf( shm_name, "/data/data/com.termux/files/imagefs/tmp/wine-%lx-esync", (unsigned long)st.st_ino );
+            sprintf( shm_name, "/data/data/com.termux/files/usr/tmp/wine-%lx-esync", (unsigned long)st.st_ino );
     }
     else
     {
